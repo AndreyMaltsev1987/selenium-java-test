@@ -1,6 +1,6 @@
-
-
-<a href="https://selenium.dev"><img src="https://selenium.dev/images/selenium_logo_square_green.png" width="180" alt="Selenium"/></a>
+<a href="https://selenium.dev"><img src="https://avatars.mds.yandex.net/i?id=bc343f52743c44359e2483527748411041d7285a-8534972-images-thumbs&n=13" width="170" alt="Selenium"/></a>
+<a href="https://logodix.com"><img src="https://logodix.com/logo/1798548.png" width="300" alt="intellij-idea"/></a>
+<a href="https://avatars.dzeninfra.ru"><img src="https://logocharts.com/wp-content/uploads/2021/12/Java-Logo-1600x1600.png" width="200" alt="Java"/></a>
 
 <b>
  <h2>What is Selenium?</h2>
@@ -36,237 +36,244 @@ cases and generate reports</li>
 
 
 ## Pre-requisites
-
-Before you can start performing Java automation testing with Selenium, you would need to:
-
-- Install the latest **Java development environment** i.e. **JDK 1.6** or higher. We recommend using the latest version.
-
-- Download the latest **Selenium Client** and its **WebDriver bindings** from the [official website](https://www.selenium.dev/downloads/). Latest versions of Selenium Client and WebDriver are ideal for running your automation script on LambdaTest Selenium cloud grid.
-
-- Install **Maven** which supports **JUnit** framework out of the box. **Maven** can be downloaded and installed following the steps from [the official website](https://maven.apache.org/).
-
-#### Selenium Standalone
-
-- Manual Installation - https://github.com/lmc-eu/steward/wiki/Selenium-server-&-browser-drivers
-- Automated Installation - https://www.npmjs.com/package/selenium-standalone
-- URL - http://localhost:4444/wd/hub
-
 ##### Installation and Launch
 <ol>
  
  <li>Step I : Install IntelliJ IDEA</li>
   <ul><li>https://www.jetbrains.com/idea/download/?ysclid=lu9zuetvnf195589274&section=windows</li></ul>
- <li>Step II : Install selenium-standalone.Latest stable version 3.141.59</li>
- <ul><li>https://tencrypto.github.io/downloads/</li></ul>
-
-</ol>
-<hr>
-# In Windows, Run CMD as Administrator
-<p>A new version of Java is installed, we check it via the Command line</p>
-
- ```
-selenium-standalone start -- java -version
-```
-
-
-#### Selenium Grid
-- URL -http://localhost:4444/grid/console
-
-##### Installation and Launch
-- Step III
-
-```
-selenium-standalone start -- -role hub
-selenium-standalone start -- -role node -hub http://localhost:4444/grid/register
-selenium-standalone start -- -role node -hub http://localhost:4444/grid/register -port 5556
-```
-```
-selenium-standalone start -- -role node -hub http://localhost:4444/grid/register -browser browserName=Chrome
-selenium-andalone start -- -role node -hub http://localhost:4444/grid/register -port 5556 -browser browserName=chrome,maxInstances=2
-```
+ <li>Step II : Connect Selenium to the IntelliJ project</li>
+ <ul><li>Log in to www.selenium.dev/downloads/</li></ul>
+<br>
+<h2>1)Find Java among the available languages and click on Download</h2>
+<img src="https://testsetup.ru/selenium/java/img/intellij_selenium_02.webp"/>
+<br>
+<h2>2)Unpack the archive. The content will be something like this</h2>
+<img src="https://testsetup.ru/selenium/java/img/intellij_selenium_03.webp"/>
+<br>
+<h2>3)Open your project in IntelliJ and click File → Project Structure
+Select Modules, then click on the plus sign on the right and select 1. JARs or directories…</h2>
+<img src="https://testsetup.ru/selenium/java/img/intellij_selenium_09.webp"/>
+<br>
+<h2>4)Go to the folder where you just unpacked the archive and select everything.jar files from the root and from the libs subfolder
+Click OK</h2>
+<img src="https://testsetup.ru/selenium/java/img/intellij_selenium_10.webp"/>
+<br>
+<h2>You have successfully imported the packages to your PC!!!</h2>
+The next step to make sure that Selenium is connected successfully is to paste the following code and compile it.
+<br>
 
 #### Code Snippets
 
-##### Maven Dependencies
+```java
 
-###### JUnit
+
+        import org.openqa.selenium.WebDriver;
+        import org.openqa.selenium.firefox.FirefoxDriver;
+        public class Main {
+        public static void main(String[] args) {
+
+                WebDriver driver = new FirefoxDriver();
+
+           }
+        }
+```
+<h2>If you do not want or cannot edit the PATH variable, try registering the path to the driver - before the WebDriver driver line = ... insert</h2>
+<br>
+
+```java
+System.setProperty("webdriver.gecko.driver", "C:/webdrivers/geckodriver.exe");
+```
+
+<h2>First of all, you need to connect By in Java, this is done as follows:</h2>
+<br>
+
+```java
+  import org.openqa.selenium.By;
+```
+
+<H2>It is often not enough just to find an element. To perform some actions on the found, connect the WebElement</H2>
+<br>
+
+```java
+import org.openqa.selenium.WebElement;
+```
+<h2>Example of searching for items</h2>
+
+A small example of searching for items.
+<p>
+Examine the page www.urn.su/ui/basic_test/
+</p>
+Test objectives:
+<ul>
+  <li>Fill out the "Website" form and click on the "Go to" button</li>
+  <li>Click on the first link with the text "Renovation"</li>
+  <li>Click on the second element with the text "Italy"</li>
+ <li>Click on the second image</li>
+</ul>
+
+<h2 align="center">  Filling in a simple form </h2>
+Let's use the most reliable method - by id. After examining the source code of the page, you will see the following code
 
 ```xml
-  <dependencies>
-  
-    <dependency>
-      <groupId>org.seleniumhq.selenium</groupId>
-      <artifactId>selenium-java</artifactId>
-      <version>3.13.0</version>
-      <scope>test</scope>
-    </dependency>
-
-  
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.12</version>
-      <scope>test</scope>
-    </dependency>
-  
-  </dependencies>
+<input type="text" id="name1" name="url1">
 ```
-###### Test NG
+Therefore, the required id is "name1"
 
-```xml
-  <dependencies>
-
-    <dependency>
-      <groupId>org.seleniumhq.selenium</groupId>
-      <artifactId>selenium-java</artifactId>
-      <version>3.13.0</version>
-      <scope>test</scope>
-    </dependency>
-
-
-    <dependency>
-      <groupId>org.testng</groupId>
-      <artifactId>testng</artifactId>
-      <version>6.14.3</version>
-      <scope>test</scope>
-    </dependency>
-
-  </dependencies>
-
-```
-
-###### Other Dependencies
-
-```xml
-    
-
-    <dependency>
-      <groupId>org.apache.poi</groupId>
-      <artifactId>poi</artifactId>
-      <version>3.6</version>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.poi</groupId>
-      <artifactId>poi-ooxml</artifactId>
-      <version>3.6</version>
-      <scope>test</scope>
-    </dependency>
-
-```
-###### Test Selenium Dependencies(Example)
-```
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-
-    <groupId>org.testing</groupId>
-    <artifactId>selenium-java-test</artifactId>
-    <version>1.0-SNAPSHOT</version>
-
-    <dependencies>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-java</artifactId>
-            <version>4.17.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-server</artifactId>
-            <version>3.141.59</version>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>RELEASE</version>
-            <scope>compile</scope>
-        </dependency>
-    </dependencies>
-
-    <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-
-</project>
-```
-
-
-###### Chrome Driver/Java Code
-
-```
-  ChromeDriverManager.getInstance().setup();
-  driver = new ChromeDriver();
-```
-
-###### Firefox Driver/Java Code
-
-```
-  FirefoxDriverManager.getInstance().setup();
-  driver = new FirefoxDriver();
-```
-
-######  Test Selenium
-```
-package org.testing;
-
-import org.junit.Test;
-import org.openqa.selenium.Platform;
+```java
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 
-import java.net.MalformedURLException;
-import java.net.URL;
+public class webDriverDemo1 {
 
-/**
- * Web page testing class.
- *
- * @version 1.0.0
- * @autor StasTkachenko3
- */
-public class Test1 {
+    public class main(String[] args) {
 
-    /*
-       ______     __
-      / ____/__  / /__  ____  (_)_  ______ ___
-      \__ \/ _ \/ / _ \/ __ \/ / / / / __ `__ \
-    ___/ /  __/ /  __/ / / / / /_/ / / / / / /
-    /____/\___/_/\___/_/ /_/_/\__,_/_/ /_/ /_/
-    ------------------------------------------
+        WebDriver driver = new ChromeDriver();
 
-    */
+        // 1. По id
 
-    /**
-     * The method opens the page and checks its title in the browser.
-     *
-     * @throws MalformedURLException
-     */
-    @Test
-    public void test1() throws MalformedURLException {
+        driver.get("http://www.urn.su/ui/basic_test/");
 
-        DesiredCapabilities capability = new DesiredCapabilities();
-        capability.setBrowserName("chrome");
-        capability.setPlatform(Platform.WIN10);
-        // Create a new driver instance.
-        WebDriver driver;
-        driver = new RemoteWebDriver(new URL("http://192.168.99.1:4444/wd/hub"), capability);
-        driver.manage().window().maximize();
-        // Opening a page in the browser.
-        driver.get("https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley");
-        // Check the page title.
-        System.out.println("Title of the page is " + driver.getTitle());
-        // After the test you need to close the browser.
-        driver.quit();
+        WebElement searchField =
+        driver.findElement(By.id("name1"));
+
+        searchField.sendKeys("topbicycle.ru");
+        searchField.submit();
+  }
+}
+```
+<h2 align="center">  Click on the link - search by text </h2>
+
+Using linkText, we will find all the links with the text Renovation, select the first one and click on it.
+
+```java
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class webDriverDemo1 {
+
+    public class main(String[] args) {
+
+        WebDriver driver = new ChromeDriver();         
+        // 2. По linkText
+
+        driver.get("http://www.urn.su/ui/basic_test/");
+
+        WebElement renovationLink =
+        driver.findElements(By.linkText("Renovation")).get(0);
+        renovationLink.click();
+  }
+}
+```
+
+<h2 align="center"> Click on the link - search by CSS selector</h2>
+
+All links in this example also have the same text - Italy. But we can't use the same technique, so let's study the page code and find out that the desired link has a march8 class
+
+We will look for a link, that is, cssSelector a, with the march8 class
+
+```java
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class webDriverDemo1 {
+
+    public class main(String[] args) {
+
+        WebDriver driver = new ChromeDriver();
+        // 3. По cssSelector
+
+        driver.get("http://www.urn.su/ui/basic_test/");
+
+        WebElement march8Link =
+        driver.findElements(By.cssSelector("a[class=march8]")).get(0);
+        march8Link.click();
+  }
+}
+
+```
+
+<h2 align="center"> Click on the image</h2>
+Now let's look at the picture. Let's use the tag search.
+
+```java
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class webDriverDemo1 {
+
+    public class main(String[] args) {
+
+        WebDriver driver = new ChromeDriver();                             
+        // 4. По tagName
+
+        driver.get("http://www.urn.su/ui/basic_test/");
+
+        WebElement imageLink =
+        driver.findElements(By.tagName("img")).get(1);
+        imageLink.click();
+    }
+}
+```
+
+<h2 align="center"> Wait for the element to appear</h2>
+The elements can be loaded onto the page at different speeds. To save yourself from unnecessary headaches, you need to make the most of Selenium's capabilities
+
+In the following example, you can visit the site search page urn.su wait for the Yandex script to load, insert the word java into the search, just to be safe, wait for the Find button to load and click on it.
+
+```java
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
+
+public class WebDriverExplicitWait {
+
+    public static void main(String[] args) {
+
+        WebDriver driver = new FirefoxDriver();
+
+        // explicit wait
+        WebDriverWait wait = new WebDriverWait(driver, 50);
+
+        driver.get("http://www.urn.su/search.php");
+
+        try {
+            WebElement yandexField =
+            wait.until(presenceOfElementLocated(By.name("text")));
+            yandexField.sendKeys("java");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            WebElement yButton =
+            wait.until(presenceOfElementLocated(By.className("ya-site-form__submit")));
+            yButton.click();
+        }
+
+        catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 }
 ```
+
 
    - File -> Import -> Existing Maven Project -> Navigate to the folder where you unzipped the zip
    - Select the right project
